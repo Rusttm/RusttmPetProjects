@@ -1,6 +1,8 @@
 #my ignore corrections
 *.ini
 *.sqlite3
+.DS_Store
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
