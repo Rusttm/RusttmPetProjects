@@ -1,2 +1,2 @@
 # RusttmPetProjects
-My pet project during Python and DataScience education
+My pet projects in one place during Python and DataScience education
