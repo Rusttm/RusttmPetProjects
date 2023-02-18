@@ -6,33 +6,21 @@
 
 {% block content %}
 <div>
-    <form action="function" method="POST">
-        {% csrf_token %}
-        <div>
-            <label for="function_string">Enter function: </label>
-            {% if context %}
-            <input id="function_string" type="text" name="your_function" value={{ context.function_string }}>
-            {% else %}
-            <input id="function_string" type="text" name="your_function" value="sin(x)">
-            {% endif %}
-        </div>
-        <div>
-            <label for="function_string">Enter range: </label>
-            <input id="left_edge" type="number" name="left_edge" value="-10">
-            <input id="right_edge" type="number" name="right_edge" value="10">
-        </div>
-        <div>
-            <label for="function_string">Enter accuracy: </label>
-            <input id="accuracy" type="number" name="accuracy" value="3">
-        </div>
 
+    <form method="POST">
+         {% csrf_token %}
+        {{ form.as_p}}
 
-        <input type="submit" value="Upload"/>
+        <input type="submit" value="Resolve"/>
     </form>
+
 
     {% if context %}
        <h6> Функция {{ context.function_string }} на отрезке ({{ context.range_left }} {{ context.range_right }}) с точностью {{ context.accuracy }}</h6>
+    {% else %}
+    <h2>context.message is empty</h2>
     {% endif %}
+
 
 </div>
 
@@ -51,8 +39,22 @@
 
 {% block sidebar_right %}
 <div>
+
   <p>Recent operations</p>
-    {{ context.function_string }}
+
+    {% if archive %}
+    <ul>
+        {% for func in archive %}
+<!--            <li>f(x)={{ func.function_string }}, xE({{ func.left_edge }} {{ func.right_edge }}) +/-(10ˆ-{{ func.accuracy }})</li>-->
+            <li>f(x)={{ func.function_string }}</li>
+        {% endfor %}
+    <ul>
+    {% else %}
+        <p>Archive is empty</p>
+
+    {% endif %}
+
+
 </div>
 
 {% endblock sidebar_right %}

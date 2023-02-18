@@ -32,7 +32,8 @@ from .forms import UploadFileForm
 # Imaginary function to handle an uploaded file.
 import sys
 sys.path.insert(0, '/Users/johnlennon/RusttmGDrive/Python/GeekBrains/web/GBsWEB/django/mysite/webapp/')
-from myuploader import handle_uploaded_file
+
+from webapp.myuploader import handle_uploaded_file
 
 def upload_file(request):
     if request.method == 'POST':
@@ -58,7 +59,6 @@ def list(request):
         if form.is_valid():
             newdoc = Document(docfile=request.FILES['docfile'])
             newdoc.save()
-
             # Redirect to the document list after POST
             return HttpResponseRedirect(reverse('list'))
     else:
