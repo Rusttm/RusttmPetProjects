@@ -1,0 +1,49 @@
+
+
+{% extends "mainapp/base.html" %}
+
+{% block title %} File Uploading {% endblock title %}
+
+{% block libraries %}
+    {% load static %}
+    <!--    dropzone -->
+    <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+    <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+    <link rel="stylesheet" href="{% static 'css/dropzone.css' %}">
+    <script src="{% static 'js/dropzone.js' %}" defer></script>
+<!--    <script src="{% static 'js/dropzone.js' %}"></script>-->
+
+{% endblock libraries %}
+
+{% block header %}
+    <h1> Загрузка файлов '.jpg' </h1>
+{% endblock header %}
+
+{% block content %}
+    <!--filesapp application main.html-->
+    <div>
+    <h6>UPLOAD MULTIPLE IMAGES NOW</h6>
+    <br>
+    <form enctype='multipart/form-data' action="filesapp/upload/" method='POST' class="dropzone dz" id="my-dropzone" >
+        {% csrf_token %}
+        <div class="fallback">
+          <input name="file" type="file" multiple />
+        </div>
+    </form>
+    </div>
+
+{% endblock content %}
+
+{% block sidebar_right %}
+    <p> Список файлов </p>
+    <!-- List of uploaded documents-->
+    {% if documents %}
+    <ul>
+        {% for document in documents %}
+            <li><a href="{{ document.upload.url }}">{{ document.upload.name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>No documents.</p>
+    {% endif %}
+{% endblock sidebar_right %}

@@ -1,0 +1,58 @@
+{% extends "mainapp/base.html" %}
+
+{% block header %}
+    <h1> Equations resolver </h1>
+{% endblock header %}
+
+{% block content %}
+<div>
+    <form action="function" method="POST">
+        {% csrf_token %}
+        <div>
+            <label for="function_string">Enter function: </label>
+            {% if context %}
+            <input id="function_string" type="text" name="your_function" value={{ context.function_string }}>
+            {% else %}
+            <input id="function_string" type="text" name="your_function" value="sin(x)">
+            {% endif %}
+        </div>
+        <div>
+            <label for="function_string">Enter range: </label>
+            <input id="left_edge" type="number" name="left_edge" value="-10">
+            <input id="right_edge" type="number" name="right_edge" value="10">
+        </div>
+        <div>
+            <label for="function_string">Enter accuracy: </label>
+            <input id="accuracy" type="number" name="accuracy" value="3">
+        </div>
+
+
+        <input type="submit" value="Upload"/>
+    </form>
+
+    {% if context %}
+       <h6> Функция {{ context.function_string }} на отрезке ({{ context.range_left }} {{ context.range_right }}) с точностью {{ context.accuracy }}</h6>
+    {% endif %}
+
+</div>
+
+
+<div>
+
+    {% if chart %}
+    <div class="fallback">
+      <img src="data:image/png;base64, {{ chart|safe }}" />
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock content %}
+
+{% block sidebar_right %}
+<div>
+  <p>Recent operations</p>
+    {{ context.function_string }}
+</div>
+
+{% endblock sidebar_right %}

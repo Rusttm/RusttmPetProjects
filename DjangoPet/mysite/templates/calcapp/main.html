@@ -1,0 +1,82 @@
+{% extends "mainapp/base.html" %}
+<!--calculator page main-->
+
+
+{% block headimage %}
+    {% load static %}
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/calculator.svg' %}"/>
+{% endblock headimage %}
+
+{% block title %} Calculator {% endblock title %}
+
+{% block libraries %}
+
+    <!--    calculator JS -->
+    <script src="{% static 'js/calc.js' %}" defer></script>
+
+
+{% endblock libraries %}
+
+{% block header %}
+    <h1> Calculator online JS </h1>
+{% endblock header %}
+
+{% block content %}
+    <div class="container text-center">
+    <!--calculate application main.html-->
+    <p id="demo"></p>
+    <p id="result"></p>
+    <p id="temp"></p>
+
+        <div>
+            <button onclick="myFunction('1')">1</button>
+            <button onclick="myFunction('2')">2</button>
+            <button onclick="myFunction('3')">3</button>
+            <button onclick="myFunction('+')">+</button>
+        </div>
+        <p></p>
+        <div>
+            <button onclick="myFunction('4')">4</button>
+            <button onclick="myFunction('5')">5</button>
+            <button onclick="myFunction('6')">6</button>
+            <button onclick="myFunction('-')">-</button>
+        </div>
+        <p></p>
+        <div>
+            <button onclick="myFunction('7')">7</button>
+            <button onclick="myFunction('8')">8</button>
+            <button onclick="myFunction('9')">9</button>
+            <button onclick="myFunction('*')">*</button>
+        </div>
+        <p></p>
+        <div>
+            <button onclick="myFunction('0')">0</button>
+            <button onclick="myFunction('.')">,</button>
+            <button onclick="myFunction('=')">=</button>
+            <button onclick="myFunction('/')">/</button>
+
+        </div>
+        <div>
+            <p></p>
+            <button onclick="myFunction('clear')">Clear</button>
+        </div>
+     </div>
+
+
+
+
+
+<!--    <script src="js/calc.js"></script>-->
+
+
+
+
+{% endblock content %}
+
+{% block sidebar_right %}
+            <div>
+    <p>Recent operations</p>
+    <p id="archive"></p>
+            </div>
+
+{% endblock sidebar_right %}
