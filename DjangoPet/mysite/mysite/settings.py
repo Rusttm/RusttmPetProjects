@@ -17,7 +17,7 @@ config = configparser.ConfigParser()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-config.read(f'{BASE_DIR}/config.ini')
+config.read(f'{BASE_DIR}/config/config.ini')
 
 import mimetypes
 mimetypes.add_type("text/css", ".css", True)
@@ -31,7 +31,8 @@ SECRET_KEY = config['TOKENS']['TOKEN']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','192.168.1.69', '192.168.1.80',
+                 '10.5.169.1', '172.17.0.1', '172.24.0.1', '169.254.88.164']
 
 
 # Application definition
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'filesapp',
     'webapp',
     'calcapp',
+    'phpsqlapp',
     'matplotapp'
 
 ]

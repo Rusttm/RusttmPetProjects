@@ -35,6 +35,7 @@ urlpatterns = [
     path('matplotapp/', include('matplotapp.urls')),
     path('filesapp/', include('filesapp.urls')),
     path('calc/', include('calcapp.urls')),
+    path('phpsqlapp/', include('phpsqlapp.urls')),
     # path(r'^$', include('webapp.urls')),
 ]
 urlpatterns += staticfiles_urlpatterns()
