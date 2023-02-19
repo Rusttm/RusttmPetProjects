@@ -22,13 +22,22 @@
 {% block content %}
     <!--filesapp application main.html-->
     <div>
-    <h6>UPLOAD MULTIPLE IMAGES NOW</h6>
-    <br>
-    <form enctype='multipart/form-data' action="filesapp/upload/" method='POST' class="dropzone dz" id="my-dropzone" >
+    <h6>Upload with dropzone</h6>
+    <form enctype='multipart/form-data' action="{% url 'filesapp_upload' %}" method='POST' class="dropzone dz" id="my-dropzone" >
         {% csrf_token %}
         <div class="fallback">
           <input name="file" type="file" multiple />
         </div>
+    </form>
+        <br>
+        <br>
+    <h6>Upload classical</h6>
+    <form action="{% url 'filesapp_upload2' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <p><input name="file" type="submit" value="Upload" /></p>
     </form>
     </div>
 
@@ -40,7 +49,7 @@
     {% if documents %}
     <ul>
         {% for document in documents %}
-            <li><a href="{{ document.upload.url }}">{{ document.upload.name }}</a></li>
+            <li><a href="{{ document.upload.url }}">{{ document.filename }}</a></li>
         {% endfor %}
     </ul>
     {% else %}
