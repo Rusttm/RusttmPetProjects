@@ -11,6 +11,7 @@ class FileUploaded(models.Model):
         ordering=['-date']
 
     def __str__(self):
+        # return str(self.filename)
         return str(self.date) + str(self.upload)
 
 
@@ -26,4 +27,5 @@ class DocumentUploaded(models.Model):
         ordering = ['-date']
 
     def __str__(self):
+        # return str(self.filename)
         return str(self.date) + str(self.upload)

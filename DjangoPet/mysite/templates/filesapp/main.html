@@ -30,6 +30,7 @@
         </div>
     </form>
         <br>
+
         <br>
     <h6>Upload classical</h6>
     <form action="{% url 'filesapp_upload2' %}" method="post" enctype="multipart/form-data">
@@ -49,7 +50,7 @@
     {% if documents %}
     <ul>
         {% for document in documents %}
-            <li><a href="{{ document.upload.url }}">{{ document.filename }}</a></li>
+            <li><a href="{{ document.upload.url }}">{{ document.upload }}</a></li>
         {% endfor %}
     </ul>
     {% else %}

@@ -25,18 +25,38 @@ def file_upload_view(request):
     return JsonResponse({'post': 'false'})
 
 from .models import DocumentUploaded
-from .forms import DocumentForm
+from .forms import DocumentForm, DocumentModelForm
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 def doc_upload_view(request):
+    """ document uploader with model form """
     # Handle file upload
     print("doc_upload_view requested")
     if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
+        form = DocumentModelForm(request.POST, request.FILES)
+
         if form.is_valid():
-            newdoc = DocumentUploaded(upload=request.FILES['upload'])
-            newdoc.save()
+            form.save()
+            # return HttpResponseRedirect(reverse('filesapp_upload2'))
+    else:
+        form = DocumentModelForm() # A empty, unbound form
+
+    # Load documents for the list page
+    documents = DocumentUploaded.objects.all()
+    print(documents)
+    return render(request, 'filesapp/main.html', context={'documents': documents, 'form': form})
+
+def doc_upload_view2(request):
+    # Handle file upload
+    print("doc_upload_view requested")
+    if request.method == 'POST':
+        form = DocumentModelForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            # newdoc = DocumentUploaded(upload=request.FILES['file'])
+            # newdoc.save()
             # Redirect to the document list after POST
             return HttpResponseRedirect(reverse('filesapp_upload2'))
     else:
