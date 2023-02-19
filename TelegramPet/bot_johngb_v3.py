@@ -12,7 +12,7 @@ try:
     # get data from in file
     conf = configparser.ConfigParser()
     #conf.read('config.ini')
-    conf.read(os.path.join(os.path.dirname(__file__), 'config.ini'))
+    conf.read(os.path.join(os.path.dirname(__file__), 'config/config.ini'))
     TOKEN = conf['TOKENS']['telegram']
 
 except IndexError:

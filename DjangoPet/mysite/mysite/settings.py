@@ -31,7 +31,7 @@ SECRET_KEY = config['TOKENS']['TOKEN']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','192.168.1.69', '192.168.1.80',
+ALLOWED_HOSTS = ['djangoproject.localhost', 'localhost', '127.0.0.1', '192.168.1.69', '192.168.1.80',
                  '10.5.169.1', '172.17.0.1', '172.24.0.1', '169.254.88.164']
 
 
