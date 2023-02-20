@@ -1,6 +1,6 @@
 Django
-configparser==5.3.0
-django_rest_auth_forked==0.9.5
-Pillow==9.4.0
-matplotlib==3.7.0
-sympy==1.11.1
+configparser
+django_rest_auth_forked
+Pillow
+matplotlib
+sympy

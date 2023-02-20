@@ -33,7 +33,7 @@ DEBUG = True
 
 # ALLOWED_HOSTS = ['djangoproject.localhost', 'localhost', '127.0.0.1', '192.168.1.69', '192.168.1.80',
 #                  '10.5.169.1', '172.17.0.1', '172.24.0.1', '169.254.88.164']
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'djangoproject.localhost', '.djangoproject.localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'djangoproject.localhost', '.djangoproject.localhost','10.5.169.1', '192.168.1.69', '192.168.1.80']
 
 
 # Application definition
