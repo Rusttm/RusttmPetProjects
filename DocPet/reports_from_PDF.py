@@ -1,6 +1,7 @@
 
 """
 модуль подготовки данных для формирования финансового отчета
+данные берутся из указанной папки (по умолчанию папка data), названия файлов пишем с указанием года отчета 2020.pdf
 from https://github.com/danshorstein/pythonic-accountant/blob/master/019%20Importing%20data%20from%20another%20PDF%20file/pdf_extract.ipynb
 
 
@@ -69,18 +70,18 @@ def GetInfoFromPDF(pdf_file="data/2020.pdf"):
 
     return document
 
-def GetInfoFromAllPDF():
+def GetInfoFromAllPDF(pdf_dir=DATA_DIR):
     """ возвращает словарь с данными из указанных файлов """
-    list_files = PdfFilesList(pdf_dir=DATA_DIR) # запрос на список файлов в директории
+    list_files = PdfFilesList(pdf_dir=pdf_dir) # запрос на список файлов в директории
     data_dict = dict()
-    for name, file in list_files[DATA_DIR].items():
-        data_dict[name] = GetInfoFromPDF(pdf_file=f"{DATA_DIR}/{file}")
-    with open(f'{DATA_DIR}/data.json', 'w') as fp:
+    for name, file in list_files[pdf_dir].items():
+        data_dict[name] = GetInfoFromPDF(pdf_file=f"{pdf_dir}/{file}")
+    with open(f'{pdf_dir}/data.json', 'w') as fp:
         json.dump(data_dict, fp)
     return data_dict
 
 
 if __name__ == '__main__':
-    print(GetInfoFromAllPDF())
+    print(GetInfoFromAllPDF(pdf_dir=DATA_DIR))
 
 

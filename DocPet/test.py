@@ -1,14 +1,9 @@
-import re
+import xlsxwriter
 
-# point_re = re.compile(r'(\d{4}\s)')
-acc_point_re = r'\d{4}\s'
-acc_point_re_exclude = r'\w\s' # char
+my_data = [['Расчет показателей', '2020', '2021', '2022', 'Норматив'], ['Показатели эффективности'], ['Коэффициент рентабельности продаж', 0.017, 0.032, 0.054], ['Коэффициент валовой прибыли', 0.02, 0.032, 0.054]]
 
-line = 'И С М А И Л 0710003 0710004'
-print(re.search(acc_point_re_exclude, line))
+with xlsxwriter.Workbook('data/test.xlsx') as workbook:
+    worksheet = workbook.add_worksheet()
 
-line = 'в 12:02'
-print(re.search(acc_point_re_exclude, line))
-
-line = '(-) (-)'
-print(re.search(acc_point_re_exclude, line))
+    for row_num, data in enumerate(my_data):
+        worksheet.write_row(row_num, 0, data)
