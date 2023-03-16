@@ -1,14 +1,16 @@
 # coding=utf8
 import reports_from_PDF
 import xlsxwriter
+import json
 
 class FinReportsFile():
     def __init__(self, file_name='fin_report'):
         print(' Не забудьте добавить в папку data годовые отчеты в формате pdf')
         self.acc_reports_data = []
+        self.acc_data_formatted = []
         self.fin_report_data = []
         self.fin_report_formatted = []
-        self.acc_data_formatted = []
+        self.f2_report_formatted = []
         self.file_name = f'{file_name}.xlsx'
 
     def PrepareFinReport(self):
@@ -16,6 +18,7 @@ class FinReportsFile():
         print(self.acc_reports_data)
         self.fin_report_formatted = self.FormattingFinReport()
         self.acc_data_formatted = self.FormattingAccData()
+        self.f2_report_formatted = self.FormattingFinf2Data()
     def FormattingFinReport(self):
         report = []
         my_data = self.acc_reports_data
@@ -176,9 +179,10 @@ class FinReportsFile():
         my_data = self.acc_reports_data
         years = my_data.keys()
 
-        line = ["код показателя"]
+        line = ["наименование", "код показателя"]
         for year in years:
             line.append(year)
+            # собирает все коды со всех отчетов
             for code in my_data[year].keys():
                 int_code = int(code)
                 codes.add(int_code)
@@ -187,11 +191,68 @@ class FinReportsFile():
         sorted_codes = list(codes)
         sorted_codes.sort()
         # print(f"{type(sorted_codes)}:{sorted_codes=}")
-        for cod in sorted_codes:
-            line = [cod]
-            for year in years:
-                value = my_data[year].get(str(cod), [None])
-                line.append(value[0])
+        acc_report_struct = {}
+        try:
+            with open('config/accbalance_namecodes.json') as json_file:
+                acc_report_struct = json.load(json_file)
+        except:
+            print("не смог загрузить данные из файла")
+
+        for name, code in acc_report_struct.items():
+            if code:
+                line_temp = []
+                for year in years:
+                    value = my_data[year].get(code, [None])
+                    line_temp.append(value[0])
+                line = [name, code] + line_temp
+            else:
+                line = [name]
+            report.append(line)
+
+        # for cod in sorted_codes:
+        #     name = code_name.get(str(cod), "наименование не найдено")
+        #     line = [name, cod]
+        #     for year in years:
+        #         value = my_data[year].get(str(cod), [None])
+        #         line.append(value[0])
+        #     report.append(line)
+
+        return report
+
+    def FormattingFinf2Data(self):
+        report = []
+        codes = set()
+        my_data = self.acc_reports_data
+        years = my_data.keys()
+
+        line = ["наименование", "код показателя"]
+        for year in years:
+            line.append(year)
+            # собирает все коды со всех отчетов
+            for code in my_data[year].keys():
+                int_code = int(code)
+                codes.add(int_code)
+        report.append(line)
+
+        sorted_codes = list(codes)
+        sorted_codes.sort()
+        # print(f"{type(sorted_codes)}:{sorted_codes=}")
+        acc_report_struct = {}
+        try:
+            with open('config/fin_f2rep_structure.json') as json_file:
+                acc_report_struct = json.load(json_file)
+        except:
+            print("не смог загрузить данные из файла")
+
+        for name, code in acc_report_struct.items():
+            if code:
+                line_temp = []
+                for year in years:
+                    value = my_data[year].get(code, [None])
+                    line_temp.append(value[0])
+                line = [name, code] + line_temp
+            else:
+                line = [name]
             report.append(line)
 
         return report
@@ -203,8 +264,11 @@ class FinReportsFile():
                 worksheet = workbook.add_worksheet('Report')
                 for row_num, data in enumerate(self.fin_report_formatted):
                     worksheet.write_row(row_num, 0, data)
-                worksheet = workbook.add_worksheet('DataReport')
+                worksheet = workbook.add_worksheet('AccReport')
                 for row_num, data in enumerate(self.acc_data_formatted):
+                    worksheet.write_row(row_num, 0, data)
+                worksheet = workbook.add_worksheet('FinReport')
+                for row_num, data in enumerate(self.f2_report_formatted):
                     worksheet.write_row(row_num, 0, data)
 
             print(f"Файл data/{self.file_name} записан успешно")
@@ -216,6 +280,6 @@ def DataReport():
     pass
 
 if __name__ == '__main__':
-    new_file = FinReportsFile('7')
+    new_file = FinReportsFile('report')
     new_file.WriteFile()
 
