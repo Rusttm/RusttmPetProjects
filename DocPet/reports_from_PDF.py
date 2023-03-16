@@ -1,4 +1,4 @@
-
+# coding=utf8
 """
 модуль подготовки данных для формирования финансового отчета
 данные берутся из указанной папки (по умолчанию папка data), названия файлов пишем с указанием года отчета 2020.pdf
@@ -64,7 +64,7 @@ def GetInfoFromPDF(pdf_file="data/2020.pdf"):
                         # print(f'Excluded {line=}\n {result=}')
                     else:
                         values = tailConverter(result)
-                        if 1 < len(values) < 5:
+                        if (1 < len(values) < 5) and not document.get(comp.group()[:-1]):
                             document[comp.group()[:-1]] = values
                             # print(f'{position=} {comp.group()=}: {values=}\n {line} tail {result=}')
 
@@ -82,6 +82,6 @@ def GetInfoFromAllPDF(pdf_dir=DATA_DIR):
 
 
 if __name__ == '__main__':
-    print(GetInfoFromAllPDF(pdf_dir=DATA_DIR))
+    print(GetInfoFromPDF())
 
 
