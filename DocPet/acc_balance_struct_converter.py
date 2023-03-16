@@ -4,7 +4,7 @@ import json
 
 
 my_name_code_dict = dict()
-file_path = '/Users/johnlennon/RusttmGDrive/Python/PetProjects/DocPet/data/accbalance_namecodes.csv'
+file_path = '/DocPet/data/accbalance_structure.csv'
 with open(file_path) as csvfile:
     spamreader = csv.reader(csvfile)
     for row in spamreader:
@@ -14,6 +14,6 @@ with open(file_path) as csvfile:
             my_name_code_dict[new_name] = row[1]
         else:
             my_name_code_dict[row[0]] = row[1]
-with open('/Users/johnlennon/RusttmGDrive/Python/PetProjects/DocPet/config/accbalance_namecodes.json', "w") as outfile:
+with open('/DocPet/config/accbalance_structure.json', "w") as outfile:
     json.dump(my_name_code_dict, outfile, indent=4, sort_keys=False, ensure_ascii=False)
 print(my_name_code_dict)

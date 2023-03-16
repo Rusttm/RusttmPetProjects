@@ -11,6 +11,8 @@ import pdfplumber
 import re
 import os
 import json
+import tqdm
+
 
 DATA_DIR = 'data'
 
@@ -72,12 +74,16 @@ def GetInfoFromPDF(pdf_file="data/2020.pdf"):
 
 def GetInfoFromAllPDF(pdf_dir=DATA_DIR):
     """ возвращает словарь с данными из указанных файлов """
-    list_files = PdfFilesList(pdf_dir=pdf_dir) # запрос на список файлов в директории
-    data_dict = dict()
-    for name, file in list_files[pdf_dir].items():
-        data_dict[name] = GetInfoFromPDF(pdf_file=f"{pdf_dir}/{file}")
-    with open(f'{pdf_dir}/data.json', 'w') as fp:
-        json.dump(data_dict, fp)
+    with tqdm.tqdm(total=100, desc="Extract data from pdf") as pbar:
+        list_files = PdfFilesList(pdf_dir=pdf_dir) # запрос на список файлов в директории
+        pbar.update(20)
+        data_dict = dict()
+        for name, file in list_files[pdf_dir].items():
+            data_dict[name] = GetInfoFromPDF(pdf_file=f"{pdf_dir}/{file}")
+            pbar.update(20)
+        with open(f'{pdf_dir}/data.json', 'w') as fp:
+            json.dump(data_dict, fp)
+        pbar.update(20)
     return data_dict
 
 

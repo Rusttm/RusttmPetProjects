@@ -1,7 +1,8 @@
 # coding="utf-8"
-import  json
-try:
-    with open('config/code_name.json') as json_file:
-        code_name = json.load(json_file)
-except Exception as e:
-    print("не смог загрузить данные из файла", e)
+import random
+import time
+import tqdm
+with tqdm.tqdm(total=100, desc="Example") as pbar:
+    for i in range(10):
+        time.sleep(0.1)
+        pbar.update(10)

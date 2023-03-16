@@ -2,6 +2,8 @@
 import reports_from_PDF
 import xlsxwriter
 import json
+import tqdm
+
 
 class FinReportsFile():
     def __init__(self, file_name='fin_report'):
@@ -14,11 +16,17 @@ class FinReportsFile():
         self.file_name = f'{file_name}.xlsx'
 
     def PrepareFinReport(self):
+
         self.acc_reports_data = reports_from_PDF.GetInfoFromAllPDF()
-        print(self.acc_reports_data)
+
         self.fin_report_formatted = self.FormattingFinReport()
+
         self.acc_data_formatted = self.FormattingAccData()
+
         self.f2_report_formatted = self.FormattingFinf2Data()
+
+
+
     def FormattingFinReport(self):
         report = []
         my_data = self.acc_reports_data
@@ -170,6 +178,7 @@ class FinReportsFile():
             coef = round(coa*crp*coefsk, 3)
             line.append(coef)
         report.append(line)
+
         return report
 
 
@@ -193,7 +202,7 @@ class FinReportsFile():
         # print(f"{type(sorted_codes)}:{sorted_codes=}")
         acc_report_struct = {}
         try:
-            with open('config/accbalance_namecodes.json') as json_file:
+            with open('config/accbalance_structure.json') as json_file:
                 acc_report_struct = json.load(json_file)
         except:
             print("не смог загрузить данные из файла")
@@ -209,13 +218,6 @@ class FinReportsFile():
                 line = [name]
             report.append(line)
 
-        # for cod in sorted_codes:
-        #     name = code_name.get(str(cod), "наименование не найдено")
-        #     line = [name, cod]
-        #     for year in years:
-        #         value = my_data[year].get(str(cod), [None])
-        #         line.append(value[0])
-        #     report.append(line)
 
         return report
 
@@ -280,6 +282,13 @@ def DataReport():
     pass
 
 if __name__ == '__main__':
-    new_file = FinReportsFile('report')
-    new_file.WriteFile()
+    with tqdm.tqdm(total=100, desc="Forming report") as pbar:
+        new_file = FinReportsFile('report')
+        pbar.update(50)
+        new_file.WriteFile()
+        pbar.update(50)
+
+
+
+
 
